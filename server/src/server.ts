@@ -3,6 +3,8 @@ import {serializerCompiler, validatorCompiler, type ZodTypeProvider } from 'fast
 import {fastifyCors} from '@fastify/cors'
 import { env } from './env.ts'
 
+import { sql } from './db/connection.ts'
+
 const app = fastify()
 
 
