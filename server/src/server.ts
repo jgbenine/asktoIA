@@ -1,14 +1,17 @@
+// biome-ignore assist/source/organizeImports: <explanation>
 import { fastify } from 'fastify'
-import {serializerCompiler, validatorCompiler, type ZodTypeProvider } from 'fastify-type-provider-zod'
-import {fastifyCors} from '@fastify/cors'
+import {
+  serializerCompiler,
+  validatorCompiler,
+  type ZodTypeProvider
+} from 'fastify-type-provider-zod'
+import { fastifyCors } from '@fastify/cors'
 import { env } from './env.ts'
+import { getRoomsRoute } from './http/routes/get-rooms.ts'
 
-import { sql } from './db/connection.ts'
+const app = fastify().withTypeProvider<ZodTypeProvider>()
 
-const app = fastify()
-
-
-app.get('/health', ()=>{
+app.get('/health', () => {
   return 'OK'
 })
 app.register(fastifyCors, {
@@ -18,9 +21,6 @@ app.register(fastifyCors, {
 app.setSerializerCompiler(serializerCompiler)
 app.setValidatorCompiler(validatorCompiler)
 
-app.listen({port: env.PORT}).then(()=>{
-  console.log(`Port: ${process.env.PORT}`)
-  console.log('Server init')
-})
+app.listen({ port: env.PORT })
 
-
+app.register(getRoomsRoute)
