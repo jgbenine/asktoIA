@@ -3,16 +3,19 @@
 
 
 #Heat check
+# @name getHealth
 GET {{baseUrl}}/health
 
 ###
 
 #Get rooms
+# @name getRooms
 GET {{baseUrl}}/rooms
 
 ###
 
 #Create room
+# @name createRoom
 POST {{baseUrl}}/rooms
 Content-Type: application/json
 
@@ -23,5 +26,24 @@ Content-Type: application/json
 
 ###
 
+@roomId = {{createRoom.response.body.$.roomId}}
+
+###
+
 #Get room questions
-GET {{baseUrl}}/rooms/6f05315b-1442-4bfa-af46-cf39d951f59e/questions
+# @name getQuestions
+GET {{baseUrl}}/rooms/{{roomId}}/questions
+
+
+###
+
+
+#Create question
+# @name createQuestion
+POST {{baseUrl}}/rooms/{{roomId}}/questions
+Content-Type: application/json
+
+
+{
+  "question": "Oque gostaria de entender sobre a história egipcia?"
+}
