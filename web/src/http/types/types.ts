@@ -4,3 +4,12 @@ export type GetRoomsResponse = Array<{
   questionCount: number;
   createdAt: string;
 }>;
+
+export type CreateRoomRequest = {
+  name: string;
+  description: string;
+};
+
+export type CreateRoomResponse = {
+  roomId: string;
+};
