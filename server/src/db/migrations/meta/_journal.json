@@ -8,6 +8,13 @@
       "when": 1752180395489,
       "tag": "0000_unusual_deathstrike",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1752500527157,
+      "tag": "0001_nervous_zaran",
+      "breakpoints": true
     }
   ]
 }

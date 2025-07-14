@@ -1,9 +1,27 @@
 #Variables
 @baseUrl = http://localhost:3333
 
+
 #Heat check
-GET {{{{baseUrl}}}}/health
- 
+GET {{baseUrl}}/health
+
+###
 
 #Get rooms
-GET {{{{baseUrl}}}}/rooms
+GET {{baseUrl}}/rooms
+
+###
+
+#Create room
+POST {{baseUrl}}/rooms
+Content-Type: application/json
+
+{
+  "name": "Sala de teste",
+  "description": "Description"
+}
+
+###
+
+#Get room questions
+GET {{baseUrl}}/rooms/0dbc2f98-4968-44be-4fdb-f399737e5e21/questions
