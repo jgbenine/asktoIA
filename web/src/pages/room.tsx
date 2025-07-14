@@ -1,21 +1,21 @@
 // import { QuestionForm } from '@/components/question-form'
 // import { QuestionList } from '@/components/question-list'
 // import { Button } from '@/components/ui/button'
-import { ArrowLeft, Radio } from 'lucide-react'
-import { Link, Navigate, useParams } from 'react-router-dom'
-import { QuestionForm } from '../components/question-form'
-import { QuestionItem } from '../components/question-item'
-import { Button } from '../components/ui/button'
+import { ArrowLeft, Radio } from "lucide-react";
+import { Link, Navigate, useParams } from "react-router-dom";
+import { QuestionForm } from "../components/question-form";
+import { QuestionList } from "../components/question-list";
+import { Button } from "../components/ui/button";
 
 type RoomParams = {
-  roomId: string
-}
+  roomId: string;
+};
 
 export function Room() {
-  const params = useParams<RoomParams>()
+  const params = useParams<RoomParams>();
 
   if (!params.roomId) {
-    return <Navigate replace to="/" />
+    return <Navigate replace to="/" />;
   }
 
   return (
@@ -48,18 +48,8 @@ export function Room() {
           <QuestionForm roomId={params.roomId} />
         </div>
 
-        <QuestionItem question={{
-          id: '1',
-          question: 'pergunta 1',
-          createdAt: new Date().toISOString()
-        }} />
-
-        <QuestionItem question={{
-          id: '2',
-          question: 'pergunta 2',
-          createdAt: new Date().toISOString()
-        }} />
+        <QuestionList roomId={params.roomId} />
       </div>
     </div>
-  )
+  );
 }
