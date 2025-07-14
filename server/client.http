@@ -24,4 +24,4 @@ Content-Type: application/json
 ###
 
 #Get room questions
-GET {{baseUrl}}/rooms/0dbc2f98-4968-44be-4fdb-f399737e5e21/questions
+GET {{baseUrl}}/rooms/6f05315b-1442-4bfa-af46-cf39d951f59e/questions

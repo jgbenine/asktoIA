@@ -15,6 +15,13 @@
       "when": 1752500527157,
       "tag": "0001_nervous_zaran",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1752508301620,
+      "tag": "0002_long_sway",
+      "breakpoints": true
     }
   ]
 }
