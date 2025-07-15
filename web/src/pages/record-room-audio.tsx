@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import { Navigate, useParams } from 'react-router-dom'
 import { Button } from '../components/ui/button'
 
 const isRecordingSupported =
@@ -6,9 +7,19 @@ const isRecordingSupported =
   typeof navigator.mediaDevices.getUserMedia === 'function' &&
   typeof window.MediaRecorder === 'function'
 
+type RoomParams = {
+  roomId: string
+}
+
 export function RecordRoomAudio() {
   const [isRecording, setIsRecording] = useState(false)
   const recorder = useRef<MediaRecorder | null>(null)
+
+  const params = useParams<RoomParams>()
+
+  if (!params.roomId) {
+    return <Navigate replace to='/' />
+  }
 
   async function startRecording() {
     if (!isRecordingSupported) {
@@ -32,7 +43,7 @@ export function RecordRoomAudio() {
 
     recorder.current.ondataavailable = (event) => {
       if (event.data.size > 0) {
-        console.log(event.data)
+        uploadAudio(event.data)
       }
     }
 
@@ -52,6 +63,25 @@ export function RecordRoomAudio() {
     if (recorder.current && recorder.current.state !== 'inactive') {
       recorder.current?.stop()
     }
+  }
+
+  async function uploadAudio(audio: Blob) {
+    //Send file recording back-end
+    const formData = new FormData()
+
+    formData.append('file', audio, 'audio.web')
+
+    const response = await fetch(
+      `http://localhost:3333/rooms/${params.roomId}/audio`,
+      {
+        method: 'POST',
+        body: formData
+      }
+    )
+
+    const result = await response.json()
+
+    console.log(result)
   }
 
   return (
