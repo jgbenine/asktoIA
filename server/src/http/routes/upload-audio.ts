@@ -1,11 +1,9 @@
-import { desc, eq } from 'drizzle-orm'
 import type { FastifyPluginCallbackZod } from 'fastify-type-provider-zod'
 import z from 'zod'
-import { db } from '../../db/connection.ts'
-import { schema } from '../../db/schema/index.ts'
+import { transcribeAudio } from '../../services/gemini.ts'
 
 export const uploadAudioRoute: FastifyPluginCallbackZod = (app) => {
-  app.get(
+  app.post(
     '/rooms/:roomId/audio',
     {
       schema: {
@@ -17,18 +15,22 @@ export const uploadAudioRoute: FastifyPluginCallbackZod = (app) => {
     async (request) => {
       const { roomId } = request.params
 
-      const result = await db
-        .select({
-          id: schema.questions.id,
-          question: schema.questions.question,
-          answer: schema.questions.answer,
-          createdAt: schema.questions.createdAt
-        })
-        .from(schema.questions)
-        .where(eq(schema.questions.roomId, roomId))
-        .orderBy(desc(schema.questions.createdAt))
+      const audio = await request.file()
 
-      return result
+      if (!audio) {
+        throw new Error('Audio is required')
+      }
+
+      const audioBuffer = audio.toBuffer()
+      const audioAsBase64 = (await audioBuffer).toString('base64')
+
+      //Transcrition audio
+      const transcriptionAudio = await transcribeAudio(
+        audioAsBase64,
+        audio.mimetype
+      )
+
+      return { transcriptionAudio }
     }
   )
 }
