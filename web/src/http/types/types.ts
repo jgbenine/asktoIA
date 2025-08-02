@@ -17,14 +17,16 @@ export type CreateRoomResponse = {
 export type GetRoomQuestionsResponse = Array<{
   id: string
   question: string
-  answer: string
+  answer: string | null
   createdAt: string
+  isGeneratingAnswer?: boolean
 }>
 
 export type CreateQuestionRequest = {
   question: string
 }
 
-export type CreateQuestionResponse = Array<{
-  roomId: string
-}>
+export type CreateQuestionResponse = {
+  questionId: string
+  answer: string | null
+}

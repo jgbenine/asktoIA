@@ -1,30 +1,29 @@
-
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod/v4'
 import { useCreateRoom } from '../http/use-create-room'
 import { Button } from './ui/button'
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle
 } from './ui/card'
 import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage
 } from './ui/form'
 import { Input } from './ui/input'
 import { Textarea } from './ui/textarea'
 
 const createRoomSchema = z.object({
   name: z.string().min(3, { message: 'Inclua no mínimo 3 caracteres' }),
-  description: z.string(),
+  description: z.string()
 })
 
 type CreateRoomFormData = z.infer<typeof createRoomSchema>
@@ -36,8 +35,8 @@ export function CreateRoomForm() {
     resolver: zodResolver(createRoomSchema),
     defaultValues: {
       name: '',
-      description: '',
-    },
+      description: ''
+    }
   })
 
   async function handleCreateRoom({ name, description }: CreateRoomFormData) {
@@ -58,12 +57,12 @@ export function CreateRoomForm() {
       <CardContent>
         <Form {...createRoomForm}>
           <form
-            className="flex flex-col gap-4"
+            className='flex flex-col gap-4'
             onSubmit={createRoomForm.handleSubmit(handleCreateRoom)}
           >
             <FormField
               control={createRoomForm.control}
-              name="name"
+              name='name'
               render={({ field }) => {
                 return (
                   <FormItem>
@@ -71,7 +70,7 @@ export function CreateRoomForm() {
                     <FormControl>
                       <Input
                         {...field}
-                        placeholder="Digite o nome da sala..."
+                        placeholder='Digite o nome da sala...'
                       />
                     </FormControl>
                     <FormMessage />
@@ -82,7 +81,7 @@ export function CreateRoomForm() {
 
             <FormField
               control={createRoomForm.control}
-              name="description"
+              name='description'
               render={({ field }) => {
                 return (
                   <FormItem>
@@ -96,7 +95,7 @@ export function CreateRoomForm() {
               }}
             />
 
-            <Button className="w-full" type="submit">
+            <Button className='w-full cursor-pointer' type='submit'>
               Criar sala
             </Button>
           </form>
